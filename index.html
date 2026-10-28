@@ -3,170 +3,157 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Game Launcher</title>
-
 <style>
-* {
-box-sizing: border-box;
+*{box-sizing:border-box}
+body{
+margin:0;min-height:100vh;display:grid;place-items:center;
+background:#0b1020;color:#f1f5f9;font-family:Arial,sans-serif
 }
-
-body {
-margin: 0;
-min-height: 100vh;
-display: grid;
-place-items: center;
-background: #0b1020;
-color: #f1f5f9;
-font-family: Arial, sans-serif;
+.panel{
+width:min(380px,92vw);padding:28px;border:1px solid #29334b;
+border-radius:18px;background:#131b2e;box-shadow:0 20px 60px #0005
 }
-
-.panel {
-width: min(380px, 92vw);
-padding: 28px;
-border: 1px solid #29334b;
-border-radius: 18px;
-background: #131b2e;
-box-shadow: 0 20px 60px #0005;
+h1{margin:0 0 6px;font-size:25px}
+.subtitle{margin:0 0 26px;color:#94a3b8;font-size:14px}
+.setting{
+display:flex;align-items:center;justify-content:space-between;
+gap:12px;padding:15px 0;border-top:1px solid #29334b
 }
-
-h1 {
-margin: 0 0 6px;
-font-size: 25px;
+.setting-name{font-size:15px;font-weight:bold}
+.setting-description{margin-top:5px;color:#94a3b8;font-size:12px}
+.switch{position:relative;width:48px;height:27px;flex-shrink:0}
+.switch input{position:absolute;opacity:0;width:1px;height:1px}
+.slider{
+position:absolute;inset:0;cursor:pointer;border-radius:20px;
+background:#475569;transition:.2s
 }
-
-.subtitle {
-margin: 0 0 26px;
-color: #94a3b8;
-font-size: 14px;
+.slider:before{
+content:"";position:absolute;width:19px;height:19px;left:4px;top:4px;
+border-radius:50%;background:white;transition:.2s
 }
-
-.setting {
-display: flex;
-align-items: center;
-justify-content: space-between;
-padding: 15px 0;
-border-top: 1px solid #29334b;
+.switch input:checked+.slider{background:#6366f1}
+.switch input:checked+.slider:before{transform:translateX(21px)}
+#launch{
+width:100%;margin-top:24px;padding:15px;border:0;border-radius:10px;
+background:#6366f1;color:white;font-size:16px;font-weight:bold;cursor:pointer
 }
-
-.setting-name {
-font-size: 15px;
-font-weight: bold;
-}
-
-.setting-description {
-margin-top: 5px;
-color: #94a3b8;
-font-size: 12px;
-}
-
-.switch {
-position: relative;
-width: 48px;
-height: 27px;
-flex-shrink: 0;
-}
-
-.switch input {
-opacity: 0;
-width: 0;
-height: 0;
-}
-
-.slider {
-position: absolute;
-inset: 0;
-cursor: pointer;
-border-radius: 20px;
-background: #475569;
-transition: .2s;
-}
-
-.slider::before {
-content: "";
-position: absolute;
-width: 19px;
-height: 19px;
-left: 4px;
-top: 4px;
-border-radius: 50%;
-background: white;
-transition: .2s;
-}
-
-.switch input:checked + .slider {
-background: #6366f1;
-}
-
-.switch input:checked + .slider::before {
-transform: translateX(21px);
-}
-
-.switch input:focus-visible + .slider {
-outline: 2px solid white;
-outline-offset: 3px;
-}
-
-#launch {
-width: 100%;
-margin-top: 24px;
-padding: 15px;
-border: 0;
-border-radius: 10px;
-background: #6366f1;
-color: white;
-font-size: 16px;
-font-weight: bold;
-cursor: pointer;
-transition: .2s;
-}
-
-#launch:hover {
-background: #4f46e5;
-}
-
-#launch:disabled {
-opacity: .65;
-cursor: wait;
-}
-
-#status {
-min-height: 16px;
-margin: 14px 0 0;
-color: #94a3b8;
-font-size: 12px;
-text-align: center;
-}
+#launch:hover{background:#4f46e5}
+#launch:disabled{opacity:.6;cursor:wait}
+#status{min-height:32px;margin:14px 0 0;color:#94a3b8;font-size:12px;text-align:center}
 </style>
-
 </head>
-
 <body>
 <main class="panel">
 <h1>🎮 Game Launcher</h1>
 <p class="subtitle">Choose your settings and launch a game.</p>
 
 <div class="setting">
-  <div>
-    <div class="setting-name">about:blank</div>
-    <div class="setting-description">Open the game in a blank tab</div>
-  </div>
-  <label class="switch">
-    <input type="checkbox" id="blankToggle" checked>
-    <span class="slider"></span>
-  </label>
+<div>
+<div class="setting-name">about:blank</div>
+<div class="setting-description">Open the game in a blank tab</div>
+</div>
+<label class="switch">
+<input type="checkbox" id="blankToggle" checked>
+<span class="slider"></span>
+</label>
 </div>
 
 <div class="setting">
-  <div>
-    <div class="setting-name">onbeforeunload</div>
-    <div class="setting-description">Warn before closing the game</div>
-  </div>
-  <label class="switch">
-    <input type="checkbox" id="unloadToggle">
-    <span class="slider"></span>
-  </label>
+<div>
+<div class="setting-name">Anti-Close</div>
+<div class="setting-description">Warn before closing the game tab</div>
+</div>
+<label class="switch">
+<input type="checkbox" id="antiCloseToggle">
+<span class="slider"></span>
+</label>
 </div>
 
 <button id="launch">🍪 Cookie Clicker</button>
-<p id="status" role
+
+<p id="status" role="status">Ready to launch</p>
+</main>
+
+<script>
+const GAME_URL =
+"https://cdn.jsdelivr.net/gh/Bentleyohio/UGS-htmljoints@main/cookie.html";
+
+const blankToggle = document.getElementById("blankToggle");
+const antiCloseToggle = document.getElementById("antiCloseToggle");
+const launchButton = document.getElementById("launch");
+const status = document.getElementById("status");
+
+launchButton.addEventListener("click", async () => {
+let gameWindow = null;
+
+// Open immediately during the click so popup blockers allow it.
+if (blankToggle.checked) {
+gameWindow = window.open("about:blank", "_blank");
+
+if (!gameWindow) {
+status.textContent = "Popup blocked. Allow pop-ups and try again.";
+return;
+}
+
+// Show feedback while loading.
+gameWindow.document.title = "Loading Cookie Clicker...";
+gameWindow.document.body.innerHTML =
+'<p style="font-family:Arial;padding:20px">Loading Cookie Clicker...</p>';
+}
+
+launchButton.disabled = true;
+status.textContent = "Loading Cookie Clicker...";
+
+try {
+if (blankToggle.checked) {
+const response = await fetch(GAME_URL);
+
+if (!response.ok) {
+throw new Error("HTTP " + response.status);
+}
+
+const html = await response.text();
+
+if (gameWindow.closed) {
+throw new Error("Game tab was closed.");
+}
+
+gameWindow.document.open();
+gameWindow.document.write(html);
+gameWindow.document.close();
+} else {
+// Direct navigation avoids cross-origin fetch restrictions.
+gameWindow = window.open(GAME_URL, "_blank");
+
+if (!gameWindow) {
+throw new Error("Popup blocked. Allow pop-ups and try again.");
+}
+}
+
+if (antiCloseToggle.checked && gameWindow) {
+gameWindow.addEventListener("beforeunload", (event) => {
+event.preventDefault();
+event.returnValue = "";
+});
+}
+
+status.textContent = "Cookie Clicker launched!";
+} catch (error) {
+console.error("Game launch error:", error);
+
+if (gameWindow && !gameWindow.closed) {
+gameWindow.close();
+}
+
+status.textContent =
+"Couldn't load the game. Try disabling about:blank or check the browser console.";
+} finally {
+launchButton.disabled = false;
+}
+});
+</script>
+
+</body>
+</html>
